@@ -1,0 +1,9 @@
+<h1> Hello  </h1>
+ <% if player_signed_in? %>
+    <li><%= link_to 'Sign out', destroy_player_session_path, method: :delete %></li>
+    <li> There have been <%= current_player.id - 1 %> players to have made an account before you </li>
+    <li> Also, you have signed in <%= current_player.sign_in_count %> times </li>
+<% else %>
+    <li><%= link_to 'Sign in', player_session_path %></li>
+    <li><%= link_to 'Sign up', new_player_registration_path %></li>
+<% end %>
