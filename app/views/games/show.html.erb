@@ -66,8 +66,20 @@ table {
             <% @col.each do |current_col| %>   
             <td>
           <!-- make sure piece can tell which player has what piece (0 empty, 1 is player 1, 2 is player 2) -->
-           <%= Piece.find_by(y: current_row , x: current_col).identity%>
-           <%= button_to( "", game_path(@game, y: current_row , x: current_col ), method: :put, class: 'col-sm-5 egg') %>
+           <%= current_piece = Piece.find_by(player_id: current_player.id, game_id: @game.id ,y: current_row  , x: current_col).identity%>
+
+           <% if current_piece == 0%>
+              <% shown = "col-sm-5 egg" %>
+              <% disable = false%>
+           <% elsif current_piece == 1 %>
+              <% shown = "col-sm-5 circle" %>
+              <% disable = true%>
+           <% elsif current_piece == 2 %>
+              <% shown = "col-sm-5 cross" %>
+              <% disable = true%>
+           <% end %>
+
+           <%= button_to( "", game_path(@game, player_id: current_player.id, game_id:  @game.id, y: current_row , x: current_col ), method: :put, class: shown, disabled: disable) %>
 
             </td>
 

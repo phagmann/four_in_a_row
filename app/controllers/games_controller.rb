@@ -21,14 +21,14 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new(game_params)
+    @game = Game.create(game_params)
     @game.player_id = current_player.id
     @game.track = 0
     @row = (0..4)
     @col = (0..4)
     @row.each do |current_row|
       @col.each do |current_col|
-        Piece.create(:player_id => current_player.id, :game_id => @game.id, :y => current_row , :x => current_col, :identity => 0)
+        p = Piece.create(:player_id => current_player.id, :game_id => @game.id, :y => current_row , :x => current_col, :identity => 0)
       end
     end
     @game.save
@@ -36,17 +36,23 @@ class GamesController < ApplicationController
   end
 
   def update
-    #piece = Piece.new
+    piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: params[:y] , x: params[:x])
     
-    piece = Piece.find_by(y: params[:y] , x: params[:x])
-    piece.identity += 1
-    piece.save
-    puts "pledging"
-    puts piece.identity
-    @game.track += 1
+    
    
+    if @game.track % 2 == 0
+      piece.identity = 1
+    elsif @game.track % 2 == 1
+      piece.identity = 2
+    end
+    @game.track += 1
 
+    piece.save
     @game.save 
+
+
+
+
     respond_with(@game)
   end
 
