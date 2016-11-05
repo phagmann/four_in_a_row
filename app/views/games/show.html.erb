@@ -1,3 +1,12 @@
+<script>
+
+
+
+
+</script>
+
+
+<!--  -->
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -12,3 +21,70 @@
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
+
+
+
+
+<!-- Displays game to play -->
+
+
+
+
+
+
+<body>
+<h1>Connect Four!</h1>
+<div>
+<p> Simply click a white egg to place your piece. You go first and play Green Circles, then the enemy AI plays Red ones. Good Luck :)</p>
+<p> Note: Only bottom open white eggs can be moved to.</p>
+<br>
+</div>
+
+<div class = "moveleft">
+
+</div>
+
+<style>
+table, tr, td {
+    border: 5px solid black;
+    padding: 15px;
+}
+table {
+    border-spacing: 5px;
+
+}
+</style>
+
+
+
+
+<table style=" position: relative; top: 40px;">
+    <% @row = (0..4)%>
+    <% @col = (0..4)%>
+    <% @row.each do |current_row| %>
+        <tr>
+            <% @col.each do |current_col| %>   
+            <td>
+          <!-- make sure piece can tell which player has what piece (0 empty, 1 is player 1, 2 is player 2) -->
+           <%= Piece.find_by(y: current_row , x: current_col).identity%>
+           <%= button_to( "", game_path(@game, y: current_row , x: current_col ), method: :put, class: 'col-sm-5 egg') %>
+
+            </td>
+
+            <% end %>
+        </tr>
+    <% end %>
+</table>
+<br></br>
+<br></br>
+<!-- TODO: put identity into controller to work succefully -->
+
+<%= @game.track %>
+</body>
+
+
+<!-- <h1>Updating game</h1> -->
+
+<!-- change state of game here? -->
+
+<%# controller.redirect_to game_path %>

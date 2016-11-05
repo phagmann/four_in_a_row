@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20161014005052) do
   create_table "games", force: true do |t|
     t.integer  "player_id"
     t.string   "name"
+    t.integer  "track"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20161014005052) do
     t.integer  "game_id"
     t.integer  "x"
     t.integer  "y"
+    t.integer  "identity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,3 +1,119 @@
 // Place all the styles related to the Games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+
+.circle {
+    position: relative;
+    border-radius: 100%;
+    background: green;
+    width: 80px;
+    height: 80px;
+    margin: 10px 10px;
+    font-size: 10px;
+    line-height: 16px;
+    
+    
+}
+.egg {
+   position: relative;
+   display:block;
+   width: 62px;
+   height: 90px;
+   background-color: white;
+   color: red;
+   -webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px;
+   border-radius:         50%  50%  50%  50%  / 60%   60%   40%  40%;
+
+
+  
+}
+
+.cross {
+    position: relative;
+    border-radius: 100%;
+    background: red;
+    width: 80px;
+    height: 80px;
+    margin: 10px 10px;
+    font-size: 10px;
+    line-height: 16px;
+
+
+}
+
+.linetop
+{
+   background: black;
+   width: 500px;
+   height: 15px;
+   position: relative;
+   left: 200px;
+   bottom: 100px;
+   
+ }
+
+ .linetop:after
+
+ {
+   background: black;
+   content: "";
+   width: 500px;
+   height: 15px;
+  
+   position: absolute;
+   bottom: 160px;
+   
+ }
+
+.linebottom
+{
+   background: black;
+   width: 500px;
+   height: 15px;
+   position: relative;
+   transform:rotate(90deg);
+   bottom: 100px;
+   right: 75px;
+   
+ }
+
+ .linebottom:after
+
+ {
+   background: black;
+   content: "";
+   width: 500px;
+   height: 15px;
+  
+   position: absolute;
+   bottom: 160px;
+   
+ }
+#topleft
+{
+ position:absolute;
+ left:400px; 
+ top:300px;
+}
+
+.moveleft {
+
+position: absolute;
+left: 275px;
+
+}
+
+body {
+    -moz-transform: scale(0.6, 0.6); /* Moz-browsers */
+    zoom: 0.6; /* Other non-webkit browsers */
+    zoom: 60%; /* Webkit browsers */
+}
+
+
+
+
+
+
