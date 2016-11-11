@@ -28,6 +28,7 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'rename'
 gem 'execjs'
+gem 'rails_12factor' 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
