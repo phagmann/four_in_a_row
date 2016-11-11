@@ -1,9 +1,14 @@
-require './lib/ai'
+require '/lib/ai.rb'
+# figure out this with heroku
+
+# HOMEWORK
+# codeship.com creat account
+# hook up repo
+# test
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_player!
   respond_to :html
-  require 'execjs'
   # TODO: Play with shit with Pieces and Games
   def index
     @games = Game.all
