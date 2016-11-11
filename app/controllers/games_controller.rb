@@ -1,4 +1,4 @@
-require '/lib/ai.rb'
+require './lib/ai.rb'
 # figure out this with heroku
 
 # HOMEWORK
