@@ -14,3 +14,16 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+function test () {
+
+    $(function(){
+
+    $.get("/games").success( function( data ) {
+      console.log(data);
+    });
+
+ });
+
+};

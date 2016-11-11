@@ -1,7 +1,9 @@
+require 'ai'
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_player!
   respond_to :html
+  require 'execjs'
   # TODO: Play with shit with Pieces and Games
   def index
     @games = Game.all
@@ -37,9 +39,7 @@ class GamesController < ApplicationController
 
   def update
     piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: params[:y] , x: params[:x])
-    
-    
-   
+
     if @game.track % 2 == 0
       piece.identity = 1
     elsif @game.track % 2 == 1
@@ -48,9 +48,13 @@ class GamesController < ApplicationController
     @game.track += 1
 
     piece.save
+    # check if win then stop game
     @game.save 
 
-
+    # computers turn
+    # puts ExecJS.eval " computersTurn() "
+    ExecJS.eval "test()" #can't load application.js or can't use them
+    # check if win then stop game
 
 
     respond_with(@game)
