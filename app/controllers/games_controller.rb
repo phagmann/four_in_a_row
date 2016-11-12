@@ -58,7 +58,6 @@ class GamesController < ApplicationController
 
     # computers turn
     # puts ExecJS.eval " computersTurn() "
-    ExecJS.eval "test()" #can't load application.js or can't use them
     # check if win then stop game
 
 
