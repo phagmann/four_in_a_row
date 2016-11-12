@@ -1,4 +1,4 @@
-module Ai
+class Ai
 # TODO: redo AI from js
 require 'pp'
 class Node
