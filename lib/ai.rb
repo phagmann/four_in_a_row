@@ -116,6 +116,7 @@ class Ai
         end
 
         def Next 
+            self.depth -= 1
             self.currentNode = self.currentNode.next_node
         end
 
@@ -166,8 +167,6 @@ class Ai
 
             if self.currentNode.total < 10000 && self.currentNode.total > -10000 then self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total + b[1] else self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total end
             self.currentNode.gdex += 1
-            pp b[0]
-            pp self.PreviousNodeAt(self.currentNode.gdex - 1).value
             return
         end
 
@@ -275,17 +274,14 @@ class Ai
 
 
             if q.currentNode.next_node == nil
-                pp "try time"
-                pp q.currentNode.uncontested[childern - countdown]
-                pp q.Value()
                 if (q.leading < q.Value() )
                     leader = q.currentNode.uncontested[childern - countdown]
                     q.leading = q.Value()
                 end
                 countdown -= 1
                 if countdown <= 0
-                    puts "win"
-                    puts leader
+                    pp "win"
+                    pp leader
                     return leader
                 end
                 q.newadd(nil,nil)
@@ -319,7 +315,7 @@ class Ai
     # AlphaBetaPruning runs 
 
     def self.ComputersTurn(data)
-        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),7)
+        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),5)
     end
 
 
