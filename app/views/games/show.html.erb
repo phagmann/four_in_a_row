@@ -54,8 +54,8 @@ table {
 
 
 <table style=" position: relative; top: 40px;">
-    <% @row = (0..4)%>
-    <% @col = (0..4)%>
+    <% @row = (0..6)%>
+    <% @col = (0..6)%>
     <% @row.each do |current_row| %>
         <tr>
             <% @col.each do |current_col| %>   
@@ -86,7 +86,6 @@ table {
 <br></br>
 <!-- TODO: put identity into controller to work succefully -->
 
-<%= @game.track %>
 </body>
 
 

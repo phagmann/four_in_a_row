@@ -30,9 +30,8 @@ class GamesController < ApplicationController
   def create
     @game = Game.create(game_params)
     @game.player_id = current_player.id
-    @game.track = 0
-    @row = (0..4)
-    @col = (0..4)
+    @row = (0..6)
+    @col = (0..6)
     @row.each do |current_row|
       @col.each do |current_col|
         p = Piece.create(:player_id => current_player.id, :game_id => @game.id, :y => current_row , :x => current_col, :identity => 0)
@@ -45,22 +44,24 @@ class GamesController < ApplicationController
   def update
     piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: params[:y] , x: params[:x])
 
-    if @game.track % 2 == 0
-      piece.identity = 1
-    elsif @game.track % 2 == 1
-      piece.identity = 2
-    end
-    @game.track += 1
+    piece.identity = 1
 
     piece.save
     # check if win then stop game
     @game.save 
 
-    # computers turn
-    # puts ExecJS.eval " computersTurn() "
-    # check if win then stop game
+    piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: params[:y] , x: params[:x])
+    pieces_in_game = Piece.where( player_id: params[:player_id], game_id: params[:game_id] )
+    
+    datas = get_data(pieces_in_game, (0..6), (0..6))
 
+    comp_move = Ai.ComputersTurn(datas.dup)
+    comp_piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: comp_move[0], x: comp_move[1])
+    comp_piece.identity = 2
+    comp_piece.save
 
+    @game.save 
+    
     respond_with(@game)
   end
 
@@ -70,12 +71,28 @@ class GamesController < ApplicationController
   end
 
   private
+    def get_data(pieces,col,row)
+      data = []
+      row.each do |r|
+      
+        section = []
+        col.each do |c|
+          section << pieces.find_by(y: r, x: c).identity
+
+        end
+        data << section
+
+      end
+      
+    return data
+    end
+
     def set_game
       @game = Game.find(params[:id])
     end
 
     def game_params
-      params.require(:game).permit(:player_id, :name, :track)
+      params.require(:game).permit(:player_id, :name)
     end
 
     def piece_params
