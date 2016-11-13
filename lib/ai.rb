@@ -2,7 +2,7 @@ class Ai
 # TODO: redo AI from js
     require 'pp'
     # evaluation fuction
-
+    # Marshal.load(Marshal.dump(2d_array))
     def self.if_array_win(data1)
         (0..(data1[0].length - 1)).each do |col|
             (0..(data1.length - 1)).each do |row|
@@ -18,8 +18,8 @@ class Ai
                                 curY = curY + (curY - col)
                                 if (curX  >= 0 && curX < data1.length  && curY  >= 0 && curY < data1.length)
                                     if (data1[curY][curX] == target && data1[curY][curX]!= 0 && !(x == 0 && y == 0) )
-                                        curX = curX + (curX - row)
-                                        curY = curY + (curY - col)
+                                        curX = curX + (curX - row - x)
+                                        curY = curY + (curY - col- y)
                                         if (curX  >= 0 && curX < data1.length  && curY  >= 0 && curY < data1[0].length)
                                             return target if (data1[curY][curX] == target)
                                         end
@@ -36,13 +36,15 @@ class Ai
             end
 
         end
-
+        return 90
     end
 
     def self.evaluation(data1, spot)
+        player_sign = 2*data1[spot[0]][spot[1]] - 3
         pos = 0
-        check = Ai.if_array_win(data1)
-        return 1000000 if( check == 1 || check == 2)
+        check = Ai.if_array_win(Marshal.load(Marshal.dump(data1)))
+        return -1000000 if check == 1
+        return 1000000 if check == 2
         (-1..1).each do |y|
             (-1..1).each do |x|
                 if (spot[1] + x  >= 0 && spot[1] + x < data1.length  && spot[0] + y >= 0 && spot[0] + y< data1.length && !(x==0 && y==0))
@@ -53,7 +55,7 @@ class Ai
 
             end
         end
-        return pos
+        return player_sign*pos
     end
 
 
@@ -61,16 +63,12 @@ class Ai
 
     # drop piece down
 
-    def self.drop_piece(data1, points, depth)
+    def self.drop_piece(data1, spot, depth)
+        # HELP: data passed to if_array_win is off!
         player = depth % 2 + 1
-        points.each do |spot|
-            if (data1[spot[0]][spot[1]] == 0)
-                data1[spot[0]][spot[1]] = player
-                return [data1.dup,Ai.evaluation(data1.dup,spot)]
-
-            end
-        end 
-        return [data1.dup,0]
+        data1[spot[0]][spot[1]] = player
+        
+        return [data1,Ai.evaluation(data1,spot)]
     end
 
 
@@ -117,18 +115,6 @@ class Ai
             return self.currentNode.previous[index]
         end
 
-        def PreviousSetLength
-            return self.currentNode.previous.length
-        end
-
-        def PreviousValues
-            set = []
-            (0..(this.currentNode.previous.length -1)).each do |i|
-                set << self.PreviousNodeAt(i).value
-            end
-            return set
-        end
-
         def Next 
             self.currentNode = self.currentNode.next_node
         end
@@ -143,8 +129,9 @@ class Ai
             if self.currentNode == nil
                 self.currentNode = node
                 self.depth += 1
-                self.currentNode.board = data.dup
-                self.currentNode.uncontested = Ai.find_choices(self.currentNode.board)
+                self.currentNode.board = Marshal.load(Marshal.dump(data))
+                self.currentNode.uncontested = Ai.find_choices(Marshal.load(Marshal.dump(self.currentNode.board)))
+                self.currentNode
                 return
             end
 
@@ -155,14 +142,13 @@ class Ai
             self.currentNode.alpha = self.currentNode.next_node.alpha
             self.currentNode.beta = self.currentNode.next_node.beta
 
-            b = Ai.drop_piece(self.currentNode.next_node.board, self.currentNode.next_node.uncontested[self.currentNode.next_node.gdex], self.depth)
+            b = Ai.drop_piece(Marshal.load(Marshal.dump(self.currentNode.next_node.board)), self.currentNode.next_node.uncontested[self.currentNode.next_node.gdex], self.depth)
 
 
-
-            self.currentNode.board = b[0]
-            if self.depth % 2 == 1 then  self.currentNode.total = self.currentNode.next_node.total + b[1] else self.currentNode.total = self.currentNode.next_node.total - b[1] end
-
-            self.currentNode.uncontested = Ai.find_choices(self.currentNode.board)
+         
+            self.currentNode.board = Marshal.load(Marshal.dump(b[0]))
+            if self.currentNode.next_node.total < 10000 && self.currentNode.next_node.total > -10000 then self.currentNode.total = self.currentNode.next_node.total + b[1] else self.currentNode.total = self.currentNode.next_node.total  end 
+            self.currentNode.uncontested = Ai.find_choices(Marshal.load(Marshal.dump(self.currentNode.board)))
             self.currentNode.next_node.gdex += 1
             self.depth += 1
             return
@@ -176,9 +162,12 @@ class Ai
             node.value = value
             node.next_node = self.currentNode
             self.currentNode.previous.push(node)
-            b = Ai.drop_piece(self.currentNode.board, self.currentNode.uncontested[self.currentNode.gdex], self.depth)
-            if self.depth % 2 == 1 then  self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total + b[1] else self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total - b[1] end
+            b = Ai.drop_piece(Marshal.load(Marshal.dump(self.currentNode.board)), self.currentNode.uncontested[self.currentNode.gdex], self.depth)
+
+            if self.currentNode.total < 10000 && self.currentNode.total > -10000 then self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total + b[1] else self.PreviousNodeAt(self.currentNode.gdex).value = self.currentNode.total end
             self.currentNode.gdex += 1
+            pp b[0]
+            pp self.PreviousNodeAt(self.currentNode.gdex - 1).value
             return
         end
 
@@ -249,7 +238,7 @@ class Ai
     def self.AplhaBetaPruning(data, depth)
         #get right cordinates to iterate through. gdex  and find_choices
         q = Tree.new
-        q.newadd(nil,data.dup)
+        q.newadd(nil,Marshal.load(Marshal.dump(data)))
         childern = q.currentNode.uncontested.length
         countdown = childern
         leader = q.currentNode.uncontested[0]
@@ -272,8 +261,8 @@ class Ai
                         break
                     end
                     q.getAlphaBeta(q.getDepth,z)
-
                 end
+                
                 q.moveAlphaBetaUp (q.getDepth)
                 q.Next
 
@@ -286,6 +275,9 @@ class Ai
 
 
             if q.currentNode.next_node == nil
+                pp "try time"
+                pp q.currentNode.uncontested[childern - countdown]
+                pp q.Value()
                 if (q.leading < q.Value() )
                     leader = q.currentNode.uncontested[childern - countdown]
                     q.leading = q.Value()
@@ -327,7 +319,7 @@ class Ai
     # AlphaBetaPruning runs 
 
     def self.ComputersTurn(data)
-        return Ai.AplhaBetaPruning(data.dup,7)
+        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),7)
     end
 
 

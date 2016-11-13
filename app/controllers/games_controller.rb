@@ -55,7 +55,7 @@ class GamesController < ApplicationController
     
     datas = get_data(pieces_in_game, (0..6), (0..6))
 
-    comp_move = Ai.ComputersTurn(datas.dup)
+    comp_move = Ai.ComputersTurn(Marshal.load(Marshal.dump(datas)))
     comp_piece = Piece.find_by( player_id: params[:player_id], game_id: params[:game_id], y: comp_move[0], x: comp_move[1])
     comp_piece.identity = 2
     comp_piece.save
