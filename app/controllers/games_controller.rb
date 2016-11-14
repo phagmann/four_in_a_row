@@ -9,7 +9,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_player!
   respond_to :html
-  # TODO: Play with shit with Pieces and Games
+  # TODO: instead of naming game then creating.....make new game then save it or destroy it
   def index
     @games = Game.all
     respond_with(@games)
