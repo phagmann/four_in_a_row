@@ -14,8 +14,7 @@
   <%= @game.name %>
 </p>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<%= link_to 'Save and Exit', games_path %>
 
 
 
@@ -73,8 +72,9 @@ table {
               <% shown = "col-sm-5 cross" %>
               <% disable = true%>
            <% end %>
+           <!-- press any botton and have it drop down. game controller? -->
+           <%= button_to( "", game_path(@game, player_id: current_player.id, game_id:  @game.id, y: current_row , x: current_col ), method: :put, id: "g" +( (@row.last+1)*current_row + current_col + 1 ).to_s, class: shown, disabled: disable, :onclick => "ifWin(7,7);") %>
 
-           <%= button_to( "", game_path(@game, player_id: current_player.id, game_id:  @game.id, y: current_row , x: current_col ), method: :put, class: shown, disabled: disable) %>
 
             </td>
 
@@ -84,13 +84,11 @@ table {
 </table>
 <br></br>
 <br></br>
-<!-- TODO: put identity into controller to work succefully -->
-
+<!-- TODO: get winning conditions and shut down game if win-->
+<script >
+  ifWin(7,7)
+</script>
 </body>
 
 
-<!-- <h1>Updating game</h1> -->
-
-<!-- change state of game here? -->
-
-<%# controller.redirect_to game_path %>
+<!-- <button onclick=" stackUp(this,num1,num2); ifWin(track,1, num1, num2); "> </button> -->
