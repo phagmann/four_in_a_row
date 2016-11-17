@@ -7,7 +7,7 @@ require './lib/ai.rb'
 # test
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_player!
+  before_action :authenticate_player! #, only: [:show, :edit, :update, :destroy]
   respond_to :html
   # TODO: instead of naming game then creating.....make new game then save it or destroy it
   def index
@@ -22,6 +22,7 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
     respond_with(@game)
+    #respond_with(@game, :location => game_path)
   end
 
   def edit

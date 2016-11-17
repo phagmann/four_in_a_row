@@ -116,8 +116,9 @@ class Ai
         end
 
         def Next 
-            self.depth -= 1
+            self.currentNode.previous = []
             self.currentNode = self.currentNode.next_node
+            self.depth -= 1
         end
 
         def Value
@@ -171,14 +172,7 @@ class Ai
         end
 
         def getDepth
-            start = self.currentNode
-            depth = 1
-            # wtf is wrong with next_node and previous they are not set as nil??
-            while start.next_node != nil
-                start = start.next_node
-                depth += 1
-            end
-            return depth
+            return self.depth
         end
 
 
@@ -253,13 +247,15 @@ class Ai
                 next
 
             elsif q.getDepth >= depth - 1
-                (0..q.currentNode.uncontested.length-1).each do |z|
+                z = 0
+                while q.currentNode.uncontested.length-1 >= z
                     q.add(nil)
                     if q.ifPrune
                         q.getAlphaBeta(q.getDepth,z)
                         break
                     end
                     q.getAlphaBeta(q.getDepth,z)
+                    z += 1
                 end
                 
                 q.moveAlphaBetaUp (q.getDepth)
@@ -315,7 +311,7 @@ class Ai
     # AlphaBetaPruning runs 
 
     def self.ComputersTurn(data)
-        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),5)
+        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),7)
     end
 
 
