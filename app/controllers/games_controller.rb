@@ -11,7 +11,7 @@ class GamesController < ApplicationController
   respond_to :html
   # TODO: instead of naming game then creating.....make new game then save it or destroy it
   def index
-    @games = Game.all
+    @games = Game.where( player_id: current_player.id )
     respond_with(@games)
   end
 

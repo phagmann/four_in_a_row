@@ -17,6 +17,7 @@
         <td><%= game.name %></td>
         <td><%= link_to 'Play', game %></td>
         <td><%= link_to 'Delete', game, method: :delete %></td>
+
       <% else %>
         <% game.destroy %>
       <% end %>
