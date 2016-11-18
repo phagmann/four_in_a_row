@@ -1,6 +1,15 @@
-<h1>Editing game</h1>
+<!-- TODO: Whyyyy won't this save -->
+<h1>Save Game</h1>
+<!-- , url: game_path(@game), method: :get -->
+<%= simple_form_for @game do |f| %>
+    <%= f.input :name %>
+    <%= f.input :id ,:as => :hidden %>
+    <%= f.input :player_id, :as => :hidden %>
+    <br />
+<%= f.submit "Save Game" %>
+  
+<% end %>
 
-<%= render 'form' %>
 
-<%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+
+<%= link_to 'Back', game_path(@game), method: :get %>

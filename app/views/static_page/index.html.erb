@@ -1,9 +1,8 @@
 <h1> Hello  </h1>
  <% if player_signed_in? %>
     <li><%= link_to 'Sign out', destroy_player_session_path, method: :delete %></li>
-    <li><%= link_to 'Make Game', new_game_path %></li>
-    <li><%= link_to 'Saved Games', games_path, method: :get %></li>
-
+    <li><%= link_to 'Load Game', games_path, method: :get %></li>
+    <%= render 'form2' %>
 <% else %>
     <li><%= link_to 'Sign in', player_session_path %></li>
     <li><%= link_to 'Sign up', new_player_registration_path %></li>
