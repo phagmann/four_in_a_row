@@ -64,7 +64,7 @@ function shutdown(curX,curY,row,col,num1,num2,data){
   }
   var origin=document.getElementById("g" + ((col)*data[col].length + (row+1)).toString()); 
   var end=document.getElementById("g" + ((curY)*data[curY].length + (curX+1)).toString()); 
-  connect(origin, end, "blue", 20)
+  connect(origin, end, "#00FFFF", 20)
   return 
 }
 

@@ -7,11 +7,10 @@
 
 <!-- Creates a game -->
 <%= simple_form_for @game do |f| %>
-    <%= f.input :name, :as => :hidden %>
-    <%= f.input :id ,:as => :hidden %>
-    <%= f.input :player_id, :as => :hidden %>
+    <% f.input :name, :as => :hidden %>
+    <% f.input :id ,:as => :hidden %>
+    <% f.input :player_id, :as => :hidden %>
     <!-- , :as => :hidden -->
-    <br />
-  <%= f.submit "New Game" %>
+  <button style=" text-align:center;margin:30px 0;"> <a  style="text-decoration: underline;color:grey;" >New Game</a><% f.submit  %></button>
   
 <% end %>

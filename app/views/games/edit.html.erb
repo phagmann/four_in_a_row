@@ -1,15 +1,41 @@
+
+
+
+
+<body>
+
+
+<div class="vid-container">
+  <video class="bgvid" autoplay="autoplay" muted="muted" preload="auto" loop>
+      <source src="http://mazwai.com/system/posts/videos/000/000/109/webm/leif_eliasson--glaciartopp.webm?1410742112" type="video/webm">
+  </video>
+  <div class="inner-container">
+    <video class="bgvid inner" autoplay="autoplay" muted="muted" preload="auto" loop>
+      <source src="http://mazwai.com/system/posts/videos/000/000/109/webm/leif_eliasson--glaciartopp.webm?random=1" type="video/webm">
+    </video>
+    <div class="box">
+
+
+
 <!-- TODO: Whyyyy won't this save -->
 <h1>Save Game</h1>
 <!-- , url: game_path(@game), method: :get -->
 <%= simple_form_for @game do |f| %>
-    <%= f.input :name %>
-    <%= f.input :id ,:as => :hidden %>
-    <%= f.input :player_id, :as => :hidden %>
+    <%=f.input :name %>
+    <% f.input :id ,:as => :hidden %>
+    <% f.input :player_id, :as => :hidden %>
     <br />
-<%= f.submit "Save Game" %>
+<button> <a  style="text-decoration: underline;color:grey;" >Save<% f.submit  %></button>
   
 <% end %>
 
 
 
-<%= link_to 'Back', game_path(@game), method: :get %>
+<button> <%= link_to 'Back', game_path(@game), method: :get %> </button>
+
+
+    </div>
+  </div>
+</div>
+
+</body>

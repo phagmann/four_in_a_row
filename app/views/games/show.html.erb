@@ -1,47 +1,47 @@
-<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
+
+<body class="show">
 
 
-<!--  -->
+<div class="box"   style = "background:rgba(0,0,0,0.0);"" >
+
+
+
+
+
 <p id="notice"><%= notice %></p>
 
-<!-- <p>
-  <strong>Player:</strong>
-  <%= @game.player_id %>
-</p> -->
 
+<button><%= link_to 'Main Menu', games_path, method: :get %></button>
 <% if @game.name != "" %>
 
 <p>
-  <strong>Game:</strong>
-  <%= @game.name %>
+  <h1> Loaded: <%= @game.name %></h1>
+  <br/>
 </p>
- Autosaving
+ <h1> Autosaving </h1>
+ <br/>
 <% else %>
-<%= link_to 'Save As', edit_game_path(@game) %> 
+<button><%= link_to 'Save As', edit_game_path(@game) %></button>
 
   
 <% end %>
 
 
-
-| <%= link_to 'Main Menu', games_path, method: :get %>
-
+</div>
 
 
 
-<!-- Displays game to play -->
+<br/>
 
-
-
-
-
-
-<body>
-<h1>Connect Four!</h1>
+<h1 style=" text-align:center;margin:30px 0;font-size:35px;color:cyan;" >Connect Four!</h1>
 <div>
-<p> Simply click a white egg to place your piece. You go first and play Green Circles, then the enemy AI plays Red ones. Good Luck :)</p>
-<p> Note: Only bottom open white eggs can be moved to.</p>
-<br>
+<br/>
+<p style=" text-align:center;margin:30px 0;font-size:22px;color:cyan;" > Simply click a white egg to place your piece. </p>
+
+<p style=" text-align:center;margin:30px 0;font-size:22px;color:cyan;" > You go first and play Yellow Circles, then the enemy AI plays Red.</p>
+
+
+<br />
 </div>
 
 <div class = "moveleft">
@@ -50,12 +50,15 @@
 
 <style>
 table, tr, td {
-    border: 5px solid black;
-    padding: 15px;
+    border: 5px solid blue;
+  
+    
 }
-table {
-    border-spacing: 5px;
 
+
+td {
+    background-color: blue;
+  
 }
 </style>
 
@@ -70,7 +73,7 @@ table {
             <% @col.each do |current_col| %>   
             <td>
           <!-- make sure piece can tell which player has what piece (0 empty, 1 is player 1, 2 is player 2) -->
-           <%= current_piece = Piece.find_by(player_id: current_player.id, game_id: @game.id ,y: current_row  , x: current_col).identity%>
+           <% current_piece = Piece.find_by(player_id: current_player.id, game_id: @game.id ,y: current_row  , x: current_col).identity%>
 
            <% if current_piece == 0%>
               <% shown = "col-sm-5 egg" %>
@@ -98,7 +101,12 @@ table {
 <script >
   ifWin(7,7)
 </script>
+
 </body>
+
+
+ 
+
 
 
 <!-- <button onclick=" stackUp(this,num1,num2); ifWin(track,1, num1, num2); "> </button> -->

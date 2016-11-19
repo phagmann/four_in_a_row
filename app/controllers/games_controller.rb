@@ -9,7 +9,6 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_player! #, only: [:show, :edit, :update, :destroy]
   respond_to :html
-  # TODO: instead of naming game then creating.....make new game then save it or destroy it
   def index
     @games = Game.where( player_id: current_player.id )
     respond_with(@games)
