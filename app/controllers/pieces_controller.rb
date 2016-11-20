@@ -1,4 +1,4 @@
-require 'ruby-prof'
+#require 'ruby-prof'
 require './lib/ai.rb'
 class PiecesController < ApplicationController
   before_action :authenticate_player! #, only: [:show, :edit, :update, :destroy]
