@@ -311,7 +311,7 @@ class Ai
     # AlphaBetaPruning runs 
 
     def self.ComputersTurn(data)
-        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),5)
+        return Ai.AplhaBetaPruning(Marshal.load(Marshal.dump(data)),7)
     end
 
 
